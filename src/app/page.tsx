@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.title}>
-        <h1>unangifier.</h1>
+        {isGMode ? <h1>unangifier &gt; G++</h1> : <h1>unangifier.</h1>}
         <TextScramble />
       </div>
       <div className={styles.mainContainer}>
@@ -74,6 +74,7 @@ export default function Home() {
             placeholder='ulastuning unadisining...'
             onChange={handleInputChange}
             value={inputText}
+            spellCheck={false}
           >
           </textarea>
           <div className={styles.buttonWrapper}>
