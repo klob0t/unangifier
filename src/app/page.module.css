@@ -1,0 +1,132 @@
+.pageContainer {
+  font-family: var(--font-sans), sans;
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden !important;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  text-overflow: unset;
+  gap: 0.5em;
+  word-wrap: none !important;
+  word-break: keep-all !important;
+  white-space: nowrap !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  margin: -3em 0em 0em 0em;
+}
+
+.mainContainer {
+  display: grid;
+  height: 100%;
+  width: 90%;
+  align-items: end;
+  margin: 1em 2em 1em 2em;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  gap: 1em;
+}
+
+.mainContainer>div:nth-of-type(2) {
+  border: 1px solid rgb(72, 70, 70);
+  background-color: var(--color-second);
+  height: 10em;
+  border-radius: 9px;
+  padding: 0em 1em 0.7em 0.7em;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative !important;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
+
+.mainContainer>div:nth-of-type(3) {
+  color: white;
+  font-size: 0.65em;
+  justify-self: center;
+}
+
+.mainContainer>div:nth-of-type(1) p {
+  font-size: 2em;
+  text-align: center;
+  text-shadow: 0px 0px 10px white;
+}
+
+.mainContainer>div:nth-of-type(1) {
+  padding: 0em 1em 0em 1em;
+  align-self: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scrollbar-color: transparent;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.buttonWrapper {
+  z-index: 1;
+  position: relative;
+  overflow: visible;
+}
+
+.button {
+  font-family: var(--font-sans), sans;
+  font-size: 1em;
+  color: rgb(186, 186, 186);
+  width: max-content;
+  border-radius: 20px;
+  border: none;
+  padding: 0em 0.2em 0em 0.2em;
+  cursor: pointer;
+  position: relative;
+}
+
+.button::before,
+.button::after{
+  position: absolute !important;
+  content: '';
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  order: 1;
+  height: 100%;
+  width: 100%;
+  animation: 3s spin linear infinite;
+  padding: 1.5px;
+  z-index: -1;
+  border-radius: 20px;
+}
+
+.button::before {
+  filter: blur(0.5em)
+  opacity(0.5)
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
+}

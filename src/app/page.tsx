@@ -1,103 +1,115 @@
-import Image from "next/image";
+'use client'
+import styles from "./page.module.css";
+import { unangify, gMode } from "@/app/lib/unangifier";
+import React, { useState, ChangeEvent } from 'react'
+import TextScramble from "@/app/lib/scramble";
+import Link from 'next/link'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [inputText, setInputText] = useState<string>('')
+  const [decodedText, setDecodedText] = useState<string>('')
+  const [isGMode, setIsGMode] = useState<boolean>(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+
+    const newText = event.target.value
+    setInputText(newText)
+
+    if (newText.trim() === '') {
+      setDecodedText('')
+      return
+    }
+
+    const words = newText.split(/\s+/)
+
+    const decodedWords = words.map(word => {
+      if (word === '') return ''
+
+      let decodedWord = unangify(word)
+
+      if (isGMode) {
+        decodedWord = gMode(decodedWord)
+      }
+      return decodedWord
+    })
+
+    const finalDecodedText = decodedWords.join(' ')
+    setDecodedText(finalDecodedText)
+  }
+
+  const toggleGmode = () => {
+    setIsGMode(prevMode => {
+      const newMode = !prevMode
+
+      if (inputText.trim() !== '') {
+        const words = inputText.split(/\s+/)
+        const reDecodedWords = words.map(word => {
+          if (word === '') return ''
+          let decodedWord = unangify(word)
+          if (newMode) {
+            decodedWord = gMode(decodedWord)
+          }
+          return decodedWord
+        })
+        setDecodedText(reDecodedWords.join(' '))
+      }
+      return newMode
+    })
+  }
+
+
+  return (
+    <div className={styles.pageContainer}>
+      <div className={styles.title}>
+        <h1>unangifier.</h1>
+        <TextScramble />
+      </div>
+      <div className={styles.mainContainer}>
+
+        <div className={styles.result}>
+          <p>{decodedText}</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div className={styles.input}>
+          <textarea
+            placeholder='ulastuning unadisining...'
+            onChange={handleInputChange}
+            value={inputText}
+          >
+          </textarea>
+          <div className={styles.buttonWrapper}>
+            <div
+              className={styles.button}
+              style={{
+                backgroundColor: isGMode ? 'black' : 'black',
+                color: isGMode ? 'black' : 'white',
+                border: isGMode ? '1px solid transparent' : '1px solid grey',
+                overflow: isGMode ? 'visible' : 'hidden'
+              }}
+            >
+              <button
+                className={styles.button}
+                onClick={toggleGmode}
+                style={{
+                  border: 'none',
+
+                  color: isGMode ? 'white' : 'grey',
+                  outline: 'none',
+                  backgroundColor: 'transparent',
+                  fontFamily: 'var(--font-sans)',
+                  overflow: isGMode ? 'visible' : 'hidden'
+                }}
+              >G++
+              </button></div></div>
+        </div>
+        <div className={styles.footer}
+          style={{
+            color: 'var(--color-fourth)'
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          <Link href='https://youtu.be/5d5FpXnguUQ?si=yUzTytKlw_HHP8W7&t=120' target='_blank' rel='unangifier'>Grind Boys Eps. 75 - Kursus Bahasa Unang</Link>&nbsp;|&nbsp;<Link href='https://klob0t.vercel.app' target='_blank' rel='unangifier'>klob0t</Link>
+        </div>
+      </div>
+
+    </div >
+  )
 }

@@ -1,26 +1,83 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root{
+  
+  --color-third: rgb(35, 35, 35);
+  --color-second: rgb(16, 16, 16);
+  --color-fourth: rgb(93, 90, 90);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+body,
+html {
+  width: 100vw;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+h1 {
+  font-size: 4em;
+  margin: 1em 0em 0em 0em;
+  letter-spacing: -0.09em;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+a {
+  color: var(--color-fourth);
+  text-decoration: underline dotted;
+}
+
+h3 {
+  margin: 0;
+  font-weight: 400;
+  
+}
+
+* {
+  box-sizing: border-box;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+hr {
+  width: 100%;
+  border: 0;
+  height: 5px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+textarea {
+  background-color: transparent;
+  font-size: 1.2em;
+  font-family: var(--font-sans), sans;
+  padding: 0.4em 0em 0em 0em;
+  width: 100%;
+  max-width: 100%;
+  resize: none;
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  display: block;
+  flex: 1;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+textarea:focus {
+  border: none;
+  outline: none;
+}
+
+button {
+  box-sizing: border-box;
 }
