@@ -17,7 +17,7 @@ export function unangify(input: string): string {
   // ─── 1) Use regex to get vowel‐centric chunks from the core:
   // "dunia" → ["du","nia"], "dia" → ["dia"], "makan" → ["ma","kan"], etc.
   const regex = /[^aiueo]*[aiueo]+(?:[^aiueo]*$|[^aiueo](?=[^aiueo]))?/gi;
-  let initialSplits = core.toLowerCase().match(regex) || [];
+  let initialSplits: string[] = core.toLowerCase().match(regex) || [];
   if (initialSplits.length === 0) {
     // If nothing matched (e.g. core = "123"), just return core + punctuation
     return core + punct;

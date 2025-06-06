@@ -60,9 +60,16 @@ export default function Home() {
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.title}>
-        {isGMode ? <h1>unangifier &gt; G++</h1> : <h1>unangifier.</h1>}
-        <TextScramble />
+      <div className={styles.titleBlock}>
+        {isGMode ? (<div className={styles.title}>
+          <h1>
+            <span>unangifier.</span>
+            <span className={styles.gBadge}>+G</span>
+          </h1>
+        </div>) :
+          <div className={styles.title}><h1>unangifier. </h1>
+          </div>}
+        <div className={styles.scrambleWrapper}><TextScramble /></div>
       </div>
       <div className={styles.mainContainer}>
 
@@ -71,7 +78,7 @@ export default function Home() {
         </div>
         <div className={styles.input}>
           <textarea
-            placeholder='ulastuning unadisining...'
+            placeholder='tulis di sini...'
             onChange={handleInputChange}
             value={inputText}
             spellCheck={false}
@@ -92,14 +99,13 @@ export default function Home() {
                 onClick={toggleGmode}
                 style={{
                   border: 'none',
-
                   color: isGMode ? 'white' : 'grey',
                   outline: 'none',
                   backgroundColor: 'transparent',
                   fontFamily: 'var(--font-sans)',
                   overflow: isGMode ? 'visible' : 'hidden'
                 }}
-              >G++
+              >+G
               </button></div></div>
         </div>
         <div className={styles.footer}

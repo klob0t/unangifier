@@ -8,13 +8,13 @@
   align-items: center;
   justify-content: flex-end;
   overflow: hidden !important;
+
 }
 
-.title {
+.titleBlock {
   display: flex;
   flex-direction: column;
   width: 80%;
-  text-overflow: unset;
   gap: 0.5em;
   word-wrap: none !important;
   word-break: keep-all !important;
@@ -22,6 +22,57 @@
   overflow-x: visible !important;
   overflow-y: visible !important;
   margin: -3em 0em 0em 0em;
+}
+
+.title h1 {
+  display: flex;           /* Key: makes the text and badge align inline */
+  align-items: center;     /* Vertical alignment */
+  gap: 0.3em;              /* Add spacing between the text and badge */
+  white-space: nowrap;  
+  overflow: visible;   /* Prevent line breaks */
+}
+
+.title {
+    display: flex;
+     overflow: visible;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.gBadge {
+  font-size: 0.6em;
+  border: 1px solid var(--color-fourth);
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 0em 0.3em 0.07em 0.1em;
+  position: relative;
+  overflow: visible;
+  background-color: #000000;
+}
+
+.gBadge::before,
+.gBadge::after {
+  position: absolute !important;
+  content: '';
+  background-image: conic-gradient(from var(--angle), var(--color), #000000 5%, #000000 60%, var(--color));
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  height: 100%;
+  width: 100%;
+  animation: 3s spin linear infinite;
+  padding: 2px;
+  z-index: -1;
+  border-radius: 13px;
+}
+
+.gBadge::before {
+  filter: blur(0.1em) opacity(1)
 }
 
 .mainContainer {
@@ -100,10 +151,11 @@
 }
 
 .button::before,
-.button::after{
+.button::after {
   position: absolute !important;
+
   content: '';
-  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  background-image: conic-gradient(from var(--angle), var(--color), #0d0d0d 5%, #0d0d0d 60%, var(--color));
   top: 50%;
   left: 50%;
   translate: -50% -50%;
@@ -111,14 +163,13 @@
   height: 100%;
   width: 100%;
   animation: 3s spin linear infinite;
-  padding: 1.5px;
+  padding: 2px;
   z-index: -1;
   border-radius: 20px;
 }
 
 .button::before {
-  filter: blur(0.5em)
-  opacity(0.5)
+  filter: blur(0.2em) opacity(0.9)
 }
 
 @keyframes spin {
@@ -129,4 +180,23 @@
   to {
     --angle: 360deg;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .titleBlock {
+    width: 80%;
+    height: fit-content;
+    text-overflow: unset;
+
+    margin: -1.2em 0em 0em 0em;
+  }
+
+  .title {
+    
+    font-size: 0.7em;
+    overflow: hidden;
+    height: max-content;
+  }
+
+
 }
